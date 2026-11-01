@@ -35,7 +35,9 @@ MAX_PROXIES_DEFAULT = 8
 
 ASSET_TYPES = {"dark-logo.png": "image/png", "light-logo.png": "image/png",
                "dark-background.png": "image/png", "light-background.png": "image/png",
-               "favicon.png": "image/png", "vazir.woff2": "font/woff2", "vazir-bold.woff2": "font/woff2"}
+               "favicon.png": "image/png", "vazir.woff2": "font/woff2", "vazir-bold.woff2": "font/woff2",
+               "dm-serif-display-400.woff2": "font/woff2", "bodoni-moda-400.woff2": "font/woff2",
+               "bodoni-moda-600-700.woff2": "font/woff2"}
 
 
 class PanelError(ValueError):
