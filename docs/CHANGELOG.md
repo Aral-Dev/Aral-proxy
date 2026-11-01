@@ -3,6 +3,26 @@
 Upgrade from Blue Knight Proxy (single-proxy panel) to **ARAL Proxy** (multi-proxy panel).
 The previous deployment's data is migrated automatically; no capability was removed.
 
+## 0. Charcoal & Silver theme update (this release)
+
+- **Full color-theme replacement**: the previous red/rainbow accent palette is gone
+  everywhere in the panel. The UI now uses a **Charcoal & Silver** identity — deep
+  charcoal surfaces, brushed-silver accents and hairline silver borders; light mode
+  inverts it (silver surfaces, charcoal accents). Status colors stay semantic
+  (online / warning / danger) but are desaturated to match the new theme.
+- **New typography**: headings use **DM Serif Display**, body text uses **Bodoni Moda**;
+  Persian text keeps Vazirmatn. All typefaces are self-hosted woff2 files
+  (OFL-licensed, ~120 KB total) — no third-party font requests.
+- **Refined icons & layout**: every icon (nav, stat cards, server resources, theme
+  toggle, refresh) is now a consistent thin-line SVG instead of mixed unicode glyphs;
+  the header nav received a redesigned active "silver pill" state with blur and depth.
+- **Performance**: unused legacy selectors were removed — aral.css dropped from
+  66.5 KB to 30.4 KB (−54%), less CSS to parse and serve on weak servers.
+- **CSP-safe markup**: all inline `style=""` attributes (silently blocked by the
+  panel's strict Content-Security-Policy) were replaced with real CSS classes, so the
+  sponsor/bridge modal layouts now render exactly as designed. Switching language now
+  also refreshes the theme toggle label.
+
 ## 1. Rebranding
 
 - Complete rebrand to **ARAL Proxy**: page titles, header, login, footer, error paths,

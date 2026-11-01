@@ -442,8 +442,12 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;'
 
 /* ================= theme & language ================= */
 const THEME_ASSETS = {
-  dark: {logo: '/panel/assets/dark-logo.png', background: '/panel/assets/dark-background.png', color: '#0b0e17'},
-  light: {logo: '/panel/assets/light-logo.png', background: '/panel/assets/light-background.png', color: '#e9edf4'}
+  dark: {logo: '/panel/assets/dark-logo.png', background: '/panel/assets/dark-background.png', color: '#15171C'},
+  light: {logo: '/panel/assets/light-logo.png', background: '/panel/assets/light-background.png', color: '#EDEEF0'}
+};
+const THEME_ICONS = {
+  dark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.2 13.6A8.2 8.2 0 0 1 10.4 3.8a8.2 8.2 0 1 0 9.8 9.8z"/></svg>',
+  light: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5"/></svg>'
 };
 function applyTheme(theme, persist = true) {
   theme = theme === 'light' ? 'light' : 'dark';
@@ -458,7 +462,7 @@ function applyTheme(theme, persist = true) {
   if (meta) meta.content = assets.color;
   const label = $('theme-label'), icon = $('theme-icon');
   if (label) label.textContent = t(theme === 'dark' ? 'theme.dark' : 'theme.light');
-  if (icon) icon.textContent = theme === 'dark' ? '\u263E' : '\u2600';
+  if (icon) icon.innerHTML = THEME_ICONS[theme];
   if ($('theme-toggle')) $('theme-toggle').setAttribute('aria-label', t(theme === 'dark' ? 'theme.toLight' : 'theme.toDark'));
   if (persist) { try { localStorage.setItem('aral-theme', theme); } catch {} }
 }
@@ -471,6 +475,8 @@ function applyLanguage(next, persist = true) {
   for (const el of document.querySelectorAll('[data-i18n-html]')) el.innerHTML = t(el.dataset.i18nHtml);
   $('lang-fa').classList.toggle('active', lang === 'fa');
   $('lang-en').classList.toggle('active', lang === 'en');
+  const themeLabel = $('theme-label');
+  if (themeLabel) themeLabel.textContent = t(document.body.dataset.theme === 'light' ? 'theme.light' : 'theme.dark');
   renderGuide();
   if (statusData) { renderOverview(); renderProxies(); }
   renderRoute(false);
@@ -627,7 +633,7 @@ function renderProxies() {
   $('proxy-empty').hidden = proxies.length > 0;
   if (!proxies.length) {
     const empty = $('proxy-empty');
-    empty.innerHTML = esc(t('proxies.empty')) + '<div style="margin-top:18px"><button class="btn-primary-red" id="empty-add" type="button">+ ' + esc(t('proxies.createFirst')) + '</button></div>';
+    empty.innerHTML = esc(t('proxies.empty')) + '<div class="empty-state-actions"><button class="btn-primary-red" id="empty-add" type="button">+ ' + esc(t('proxies.createFirst')) + '</button></div>';
     $('empty-add').addEventListener('click', () => openProxyModal(null));
   }
   for (const p of proxies) list.appendChild(buildProxyCard(p));
@@ -870,7 +876,7 @@ function openQr(link) {
       rect.setAttribute('x', (c + quiet) * scale);
       rect.setAttribute('y', (r + quiet) * scale);
       rect.setAttribute('width', scale); rect.setAttribute('height', scale);
-      rect.setAttribute('fill', '#0b0e17');
+      rect.setAttribute('fill', '#1B1E24');
       svg.appendChild(rect);
     }
     box.appendChild(svg);
